@@ -3,57 +3,57 @@ from flask_sqlalchemy import SQLAlchemy
 db = SQLAlchemy()
 
 class User(db.Model):
+    __tablename__ = "user"
     id = db.Column(db.Integer, primary_key=True)
     email = db.Column(db.String(120), unique=True, nullable=False)
     password = db.Column(db.String(80), unique=False, nullable=False)
     is_active = db.Column(db.Boolean(), unique=False, nullable=False)
-    sent_requests = db.relationship('Request', foreign_keys=('Request.creator_id'), back_populates='creator')
-    games_as_creator = db.relationship('Game', foreign_keys=('Game.creator_id'), backref='creator')
-    games_as_receiver = db.relationship('Game', foreign_keys=('Game.receiver_id'), backref='receiver')
-
+    # Fixed relationship with Request table
+    sent_requests = db.relationship('Request', foreign_keys='Request.creator_id', back_populates='creator')
+    received_requests = db.relationship('Request', foreign_keys='Request.receiver_id', back_populates='receiver')
+    # Fixed relationship with Game table
+    games_as_creator = db.relationship('Game', foreign_keys='Game.creator_id', backref='creator')
+    games_as_receiver = db.relationship('Game', foreign_keys='Game.receiver_id', backref='receiver')
     def __repr__(self):
         return f'<User {self.email}>'
-
     def serialize(self):
         return {
             "id": self.id,
             "email": self.email,
-            # do not serialize the password, its a security breach
         }
 class Request(db.Model):
+    __tablename__ = "request"
     id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, foreign_keys=('users.id'), nullable=False)
-    receiver_id = db.Column(db.Integer, foreign_keys=('users.id'), nullable=False)
-    creator = db.relationship('User', foreign_keys=('creator_id'), back_populates='sent_requests')
-    receiver = db.relationship('User', foreign_keys=('receiver_id'), back_populates='received_requests')
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    creator = db.relationship('User', foreign_keys=[creator_id], back_populates='sent_requests')
+    receiver = db.relationship('User', foreign_keys=[receiver_id], back_populates='received_requests')
     category = db.Column(db.Boolean(), unique=False, nullable=False)
     status = db.Column(db.Boolean(), unique=False, nullable=False)
-
     def __repr__(self):
-        return f'<User {self.email}>'
-
+        return f'<Request {self.id}>'
     def serialize(self):
         return {
             "id": self.id,
-            "creator": self.email,
-            "receiver":self.receiver,
-            "category":self.category,
-            "status":self.status,
+            # Removed 'self.email', it's not present in this model
+            "creator": self.creator_id,
+            "receiver": self.receiver_id,
+            "category": self.category,
+            "status": self.status,
         }
 class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    creator_id = db.Column(db.Integer, foreign_keys=('users.id'), nullable=False)
-    receiver_id = db.Column(db.Integer, foreign_keys=('users.id'), nullable=False)
+    creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    receiver_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
     wager = db.Column(db.Float(), nullable=False, default=0.0)
-    created_at = db.Column(db.Boolean(), unique=False, nullable=False)
-    creator = db.relationship('User', foreign_keys=('creator_id'), backref='games_as_creator')    
+    created_at = db.Column(db.DateTime(timezone=False), unique=False, nullable=False)
+    # Removed duplicate relationships, already set up in User
     creator_move1 = db.Column(db.String(80), unique=False, nullable=False)
     creator_move2 = db.Column(db.String(80), unique=False, nullable=False)
     creator_move3 = db.Column(db.String(80), unique=False, nullable=False)
     creator_move4 = db.Column(db.String(80), unique=False, nullable=False)
     creator_move5 = db.Column(db.String(80), unique=False, nullable=False)
     creator_move6 = db.Column(db.String(80), unique=False, nullable=False)
-    receiver = db.relationship('User', foreign_keys=('receiver_id'), backref='games_as_receiver')
     receiver_move1 = db.Column(db.String(80), unique=False, nullable=False)
     receiver_move2 = db.Column(db.String(80), unique=False, nullable=False)
     receiver_move3 = db.Column(db.String(80), unique=False, nullable=False)
@@ -61,9 +61,8 @@ class Game(db.Model):
     receiver_move5 = db.Column(db.String(80), unique=False, nullable=False)
     receiver_move6 = db.Column(db.String(80), unique=False, nullable=False)
     result = db.Column(db.String(80), unique=False, nullable=False)
-
     def __repr__(self):
-        return f'<User {self.email}>'
+        return f'<Game {self.id}>'
 
     def serialize(self):
         return {
