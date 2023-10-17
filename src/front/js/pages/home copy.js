@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
+import { Link } from "react-router-dom";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
@@ -12,7 +13,7 @@ export const Home = () => {
 			<img src="https://user-images.githubusercontent.com/10386592/235164983-2b5e6de9-6e57-40cc-8323-54c3dd010d1e.png" />
 			<br />
 		</div>
-		<div><center><a href="creator_wager.js" class="p-3 badge bg-info rounded-pill"> Create A Game </a></center></div>
+		<div><center><Link to="/creator_wager" class="p-3 badge bg-info rounded-pill"> Create A Game </Link></center></div>
 		<div id="card"><br /><center><h4>Current Games</h4></center></div>
 		<div class="list-group"><br />
 			<a href="#" class="list-group-item list-group-item-action" aria-current="true">
