@@ -6,6 +6,9 @@ import { BackendURL } from "./component/backendURL";
 import { Home } from "./pages/home";
 import { Demo } from "./pages/demo";
 import { Creator } from "./pages/creator_wager";
+import { Receiver } from "./pages/receiver_wager";
+import { Winner } from "./pages/winner";
+import { Loser } from "./pages/loser";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
@@ -28,6 +31,9 @@ const Layout = () => {
                     <Routes>
                         <Route element={<Home />} path="/" />
                         <Route element={<Creator/>} path="/creator_wager" />
+                        <Route element={<Receiver/>} path="/receiver_wager" />
+                        <Route element={<Winner />} path="/winner" />
+                        <Route element={<Loser />} path="/loser" />
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<h1>Not found!</h1>} />
