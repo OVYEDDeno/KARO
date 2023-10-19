@@ -13,7 +13,7 @@ export const Home = () => {
 			<img src="https://user-images.githubusercontent.com/10386592/235164983-2b5e6de9-6e57-40cc-8323-54c3dd010d1e.png" />
 			<br />
 		</div>
-		<div><center><Link to="/creator_wager" class="p-3 badge bg-info rounded-pill"> Create A Game </Link></center></div>
+		<div><center><Link to="/creator_wager" class="p-3 badge bg-info rounded-pill">NEW GAME</Link></center></div>
 		<div id="card"><br /><center><h4>Current Games</h4></center></div>
 		<div class="list-group"><br />
 			<a href="#" class="list-group-item list-group-item-action" aria-current="true">
