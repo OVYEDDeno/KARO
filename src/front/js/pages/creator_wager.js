@@ -7,6 +7,10 @@ export const Creator = () => {
 	const { store, actions } = useContext(Context);
     const [wagerAmount, setWagerAmount] = useState(0)
     const [move1, setMove1] = useState("")
+    const [move2, setMove2] = useState("")
+    const [move3, setMove3] = useState("")
+    const [move4, setMove4] = useState("")
+    const [move5, setMove5] = useState("")
     console.log(wagerAmount)
 
 	return (<div class="container">
