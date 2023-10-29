@@ -27,6 +27,13 @@ def FightMove(creator_move, receiver_move):
     else:
         return "Invalid input"
 
+# @api.route('/creator_wager', methods=['POST'])
+# def creator_wager():
+#     response_body=request.get_json()
+
+#     # new_game= Game(creator_id=response_body['creator_id'])
+
+
 @api.route('/signup', methods=['POST'])
 def signup():
 

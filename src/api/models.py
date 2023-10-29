@@ -1,6 +1,7 @@
 from flask_sqlalchemy import SQLAlchemy
 import random, enum
 db = SQLAlchemy()
+from datetime import datetime
 
 class User(db.Model):
     __tablename__ = "user"
@@ -28,7 +29,7 @@ class Game(db.Model):
     creator_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False, unique=False)
     db.UniqueConstraint('creator_id', 'receiver_id',name='uq_game_creator_receiver')
     wager = db.Column(db.Float(), nullable=False, default=0.0)
-    created_at = db.Column(db.DateTime(timezone=False), unique=False, nullable=True)
+    created_at = db.Column(db.DateTime(timezone=False), unique=False, nullable=True, default=datetime.now())
     creator_move1 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
     creator_move2 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
     creator_move3 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
@@ -40,18 +41,15 @@ class Game(db.Model):
     receiver_move3 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
     receiver_move4 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
     receiver_move5 = db.Column(db.Enum(MoveTypes), unique=False, nullable=True, default=random.choice(['Rock', 'Paper', 'Scissor']))
-    result = db.column(db.Integer)
-    def __repr__(self):
-        return f'<Game {self.id}>'
+    result = db.Column(db.Integer)
+    # def __repr__(self):
+    #     return f'<Game {self.id}>'
 
-    def serialize(self):
-        return {
-            "id": self.id,
-            "email": self.email,
-            "creator": self.creator,
-            "creator_move1": self.creator_move1,
-            "receiver": self.receiver,
-            "receiver_move1": self.receiver_move1,
-            "created_at": self.created_at,
-            "result": self.result,
-        }
+    # def serialize(self):
+    #     return {
+    #         "id": self.id,
+    #         "creator": self.creator_id,
+    #         "receiver": self.receiver_id,
+    #         "created_at": self.created_at,
+    #         "result": self.result,
+    #     }

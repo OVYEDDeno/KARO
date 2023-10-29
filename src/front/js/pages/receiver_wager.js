@@ -11,14 +11,13 @@ export const Receiver = () => {
     const [move3, setMove3] = useState("")
     const [move4, setMove4] = useState("")
     const [move5, setMove5] = useState("")
-    console.log(wagerAmount)
 
 	return (<div class="container">
         <div>
-        <div class="input-group input-group-lg"><h1>Wager </h1>
+        {/* <div class="input-group input-group-lg"><h1>Wager </h1>
             <span class="input-group-text" id="inputGroup-sizing-lg">$</span>
             <input value={wagerAmount} onChange={(e)=> setWagerAmount(e.target.value)} type="number" class="form-control" aria-label="Sizing example input" aria-describedby="inputGroup-sizing-lg"/>
-            </div><p>Play Responsibly: As fast as you can lose is as fast as you can win!</p><br></br>
+            </div><p>Play Responsibly: As fast as you can lose is as fast as you can win!</p><br></br> */}
         <div><h1>Pick Your 5 Moves</h1>
         <h5>Move 1</h5><select value={move1} onChange={(e)=> setMove1(e.target.value)} class="form-select" aria-label="Default select example">
             <option value="ROCK" selected>ROCK</option>
