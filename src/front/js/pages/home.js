@@ -3,9 +3,18 @@ import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 import "../../styles/home.css";
 import { Link } from "react-router-dom";
+import {Web3} from "web3";
 
 export const Home = () => {
 	const { store, actions } = useContext(Context);
+	const init = async () => {
+		//const web3 = new Web3("HTTP://127.0.0.1:7545");
+		if(window.ethereum){
+		  //Metamask is installed
+		  const web3 = new Web3(window.ethereum);
+		  await window.ethereum.request({
+			method:"eth_requestAccounts"
+		  })}}
 
 	return (
 		<div class="holder">
@@ -13,6 +22,7 @@ export const Home = () => {
 			<img src="https://user-images.githubusercontent.com/10386592/235164983-2b5e6de9-6e57-40cc-8323-54c3dd010d1e.png" />
 			<br />
 		</div>
+		<button onClick={init}>Connect Wallet</button>
 		<div><center><Link to="/creator_wager" class="p-3 badge bg-info rounded-pill">NEW GAME</Link></center></div>
 		<div id="card"><br /><center><h4>Current Games</h4></center></div>
 		<div class="list-group"><br />
